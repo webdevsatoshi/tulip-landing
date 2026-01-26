@@ -2,7 +2,7 @@
    1. CSS Variables
    ========================================================================== */
 :root {
-    /* Colors */
+    /* Colors - Light Mode (default) */
     --color-primary: #E85A4F;
     --color-primary-hover: #d44d42;
     --color-bg: #FAFAFA;
@@ -14,6 +14,8 @@
     --color-white: #FFFFFF;
     --color-success: #10B981;
     --color-error: #EF4444;
+    --color-card-bg: #FFFFFF;
+    --nav-bg-scrolled: rgba(250, 250, 250, 0.95);
 
     /* Typography */
     --font-display: 'Fraunces', Georgia, serif;
@@ -50,6 +52,23 @@
     --transition-fast: 150ms ease;
     --transition-base: 250ms ease;
     --transition-slow: 400ms ease;
+}
+
+/* Dark Mode Colors */
+[data-theme="dark"] {
+    --color-bg: #0F0F0F;
+    --color-bg-alt: #1A1A1A;
+    --color-text: #F5F5F5;
+    --color-text-muted: #A0A0A0;
+    --color-text-light: #707070;
+    --color-border: #2A2A2A;
+    --color-white: #1A1A1A;
+    --color-card-bg: #1A1A1A;
+    --nav-bg-scrolled: rgba(15, 15, 15, 0.95);
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.2);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.3);
+    --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.4);
+    --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.5);
 }
 
 /* ==========================================================================
@@ -172,7 +191,7 @@ section {
 }
 
 .nav.scrolled {
-    background: rgba(250, 250, 250, 0.95);
+    background: var(--nav-bg-scrolled);
     backdrop-filter: blur(10px);
     box-shadow: var(--shadow-sm);
 }
@@ -192,6 +211,15 @@ section {
     font-size: 1.5rem;
     font-weight: 600;
     color: var(--color-text);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.nav-logo-img {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
 }
 
 .nav-links {
@@ -218,6 +246,47 @@ section {
     .nav-cta {
         display: inline-flex;
     }
+}
+
+/* Theme Toggle Button */
+.theme-toggle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-text);
+    background: transparent;
+    transition: background var(--transition-fast), color var(--transition-fast);
+    order: 10;
+}
+
+.theme-toggle:hover {
+    background: var(--color-bg-alt);
+}
+
+.theme-toggle svg {
+    width: 20px;
+    height: 20px;
+}
+
+/* Light mode: show sun, hide moon */
+.theme-toggle .icon-sun {
+    display: block;
+}
+
+.theme-toggle .icon-moon {
+    display: none;
+}
+
+/* Dark mode: show moon, hide sun */
+[data-theme="dark"] .theme-toggle .icon-sun {
+    display: none;
+}
+
+[data-theme="dark"] .theme-toggle .icon-moon {
+    display: block;
 }
 
 /* ==========================================================================
@@ -347,125 +416,42 @@ section {
     justify-content: center;
 }
 
-.iphone-frame {
-    width: 280px;
-    background: #1A1A1A;
-    border-radius: 40px;
-    padding: 12px;
-    box-shadow: var(--shadow-xl);
-    position: relative;
+.phone-mockup {
+    max-width: 340px;
+    width: 100%;
+    height: auto;
+    filter: drop-shadow(0 25px 50px rgba(0, 0, 0, 0.15));
 }
 
 @media (min-width: 768px) {
-    .iphone-frame {
-        width: 320px;
-        padding: 14px;
-        border-radius: 48px;
+    .phone-mockup {
+        max-width: 380px;
     }
 }
 
-.iphone-notch {
-    position: absolute;
-    top: 12px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 100px;
-    height: 28px;
-    background: #1A1A1A;
-    border-radius: 0 0 16px 16px;
-    z-index: 10;
+/* Light mode: show light phone, hide dark phone */
+.phone-light {
+    display: block;
 }
 
-@media (min-width: 768px) {
-    .iphone-notch {
-        top: 14px;
-        width: 120px;
-        height: 32px;
-    }
+.phone-dark {
+    display: none;
 }
 
-.iphone-screen {
-    background: var(--color-white);
-    border-radius: 32px;
-    overflow: hidden;
-    height: 520px;
+/* Dark mode: show dark phone, hide light phone */
+[data-theme="dark"] .phone-light {
+    display: none;
 }
 
-@media (min-width: 768px) {
-    .iphone-screen {
-        height: 580px;
-        border-radius: 38px;
-    }
-}
-
-.imessage-header {
-    background: #F6F6F6;
-    padding: 3rem 1rem 0.75rem;
-    text-align: center;
-    border-bottom: 1px solid var(--color-border);
-}
-
-.imessage-name {
-    font-weight: 600;
-    font-size: 1rem;
-    color: var(--color-text);
-}
-
-.imessage-chat {
-    padding: 1rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    overflow-y: auto;
-    height: calc(100% - 80px);
-}
-
-/* Messages */
-.message {
-    display: flex;
-    opacity: 0;
-    transform: translateY(10px);
-    transition: opacity 0.3s ease, transform 0.3s ease;
-}
-
-.message.visible {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.message-user {
-    justify-content: flex-end;
-}
-
-.message-tulip {
-    justify-content: flex-start;
-}
-
-.message-bubble {
-    max-width: 85%;
-    padding: 0.625rem 0.875rem;
-    border-radius: 18px;
-    font-size: 0.875rem;
-    line-height: 1.4;
-}
-
-.message-user .message-bubble {
-    background: #007AFF;
-    color: white;
-    border-bottom-right-radius: 4px;
-}
-
-.message-tulip .message-bubble {
-    background: #E9E9EB;
-    color: var(--color-text);
-    border-bottom-left-radius: 4px;
+[data-theme="dark"] .phone-dark {
+    display: block;
 }
 
 /* ==========================================================================
    8. Value Comparison Section
    ========================================================================== */
 .comparison {
-    background: var(--color-white);
+    background: var(--color-card-bg);
 }
 
 .comparison-grid {
@@ -491,7 +477,7 @@ section {
 }
 
 .comparison-tulip {
-    background: var(--color-white);
+    background: var(--color-card-bg);
     border: 2px solid var(--color-primary);
     box-shadow: var(--shadow-lg);
 }
@@ -592,7 +578,7 @@ section {
 }
 
 .feature-card {
-    background: var(--color-white);
+    background: var(--color-card-bg);
     border: 1px solid var(--color-border);
     border-radius: var(--radius-lg);
     padding: var(--spacing-lg);
@@ -634,7 +620,7 @@ section {
    10. How It Works Section
    ========================================================================== */
 .how-it-works {
-    background: var(--color-white);
+    background: var(--color-card-bg);
 }
 
 .steps {
@@ -705,7 +691,7 @@ section {
 }
 
 .pricing-card {
-    background: var(--color-white);
+    background: var(--color-card-bg);
     border: 1px solid var(--color-border);
     border-radius: var(--radius-xl);
     padding: var(--spacing-2xl);
@@ -782,7 +768,7 @@ section {
    12. FAQ Section
    ========================================================================== */
 .faq {
-    background: var(--color-white);
+    background: var(--color-card-bg);
 }
 
 .faq-list {

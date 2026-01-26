@@ -14,13 +14,29 @@
     <!-- Navigation -->
     <header class="nav" id="nav">
         <div class="nav-container">
-            <a href="#" class="nav-logo">Tulip</a>
+            <a href="#" class="nav-logo"><img src="tulip.png" alt="Tulip" class="nav-logo-img">Tulip</a>
             <nav class="nav-links">
                 <a href="#features">Features</a>
                 <a href="#pricing">Pricing</a>
                 <a href="#faq">FAQ</a>
             </nav>
             <a href="#cta" class="nav-cta btn btn-primary">Get Started</a>
+            <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
+                <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="5"></circle>
+                    <line x1="12" y1="1" x2="12" y2="3"></line>
+                    <line x1="12" y1="21" x2="12" y2="23"></line>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                    <line x1="1" y1="12" x2="3" y2="12"></line>
+                    <line x1="21" y1="12" x2="23" y2="12"></line>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                </svg>
+                <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                </svg>
+            </button>
         </div>
     </header>
 
@@ -39,40 +55,8 @@
                     </div>
                 </div>
                 <div class="hero-phone">
-                    <div class="iphone-frame">
-                        <div class="iphone-notch"></div>
-                        <div class="iphone-screen">
-                            <div class="imessage-header">
-                                <span class="imessage-name">Tulip</span>
-                            </div>
-                            <div class="imessage-chat" id="chat">
-                                <div class="message message-user" data-delay="0">
-                                    <div class="message-bubble">Remind me to cancel the free trial before they charge me</div>
-                                </div>
-                                <div class="message message-tulip" data-delay="600">
-                                    <div class="message-bubble">Done. I'll text you 2 days before it renews so you have time.</div>
-                                </div>
-                                <div class="message message-user" data-delay="1200">
-                                    <div class="message-bubble">Add milk, bread, and dog food to my grocery list</div>
-                                </div>
-                                <div class="message message-tulip" data-delay="1800">
-                                    <div class="message-bubble">Added. Your list has 5 items now.</div>
-                                </div>
-                                <div class="message message-user" data-delay="2400">
-                                    <div class="message-bubble">When's my doctor appointment?</div>
-                                </div>
-                                <div class="message message-tulip" data-delay="3000">
-                                    <div class="message-bubble">Thursday at 2pm with Dr. Patel. Want a reminder the night before?</div>
-                                </div>
-                                <div class="message message-user" data-delay="3600">
-                                    <div class="message-bubble">Yes</div>
-                                </div>
-                                <div class="message message-tulip" data-delay="4200">
-                                    <div class="message-bubble">Got it. I'll text you Wednesday at 8pm.</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <img src="light_chat.svg" alt="Tulip chat demo" class="phone-mockup phone-light">
+                    <img src="dark_chat.svg" alt="Tulip chat demo" class="phone-mockup phone-dark">
                 </div>
             </div>
         </section>

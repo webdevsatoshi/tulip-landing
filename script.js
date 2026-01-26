@@ -4,11 +4,47 @@
  */
 
 document.addEventListener('DOMContentLoaded', () => {
+    initTheme();
     initNavScroll();
     initScrollAnimations();
-    initMessageAnimation();
     initFaqAccordion();
 });
+
+/**
+ * Theme switching functionality
+ * Detects system preference and allows manual toggle
+ */
+function initTheme() {
+    const themeToggle = document.getElementById('theme-toggle');
+    if (!themeToggle) return;
+
+    // Check for saved theme preference, otherwise use system preference
+    const savedTheme = localStorage.getItem('theme');
+    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+    if (savedTheme) {
+        document.documentElement.setAttribute('data-theme', savedTheme);
+    } else if (systemPrefersDark) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+    }
+
+    // Toggle theme on button click
+    themeToggle.addEventListener('click', () => {
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+
+        document.documentElement.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+    });
+
+    // Listen for system preference changes
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+        // Only auto-switch if user hasn't manually set a preference
+        if (!localStorage.getItem('theme')) {
+            document.documentElement.setAttribute('data-theme', e.matches ? 'dark' : 'light');
+        }
+    });
+}
 
 /**
  * Navigation scroll state
@@ -56,50 +92,6 @@ function initScrollAnimations() {
     fadeElements.forEach((el) => observer.observe(el));
 }
 
-/**
- * iPhone message animation
- * Staggered appearance of chat messages
- */
-function initMessageAnimation() {
-    const messages = document.querySelectorAll('.message');
-    if (messages.length === 0) return;
-
-    // Check if the chat is in view
-    const chat = document.getElementById('chat');
-    if (!chat) return;
-
-    const observerOptions = {
-        root: null,
-        rootMargin: '0px',
-        threshold: 0.3
-    };
-
-    let hasAnimated = false;
-
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-            if (entry.isIntersecting && !hasAnimated) {
-                hasAnimated = true;
-                animateMessages(messages);
-                observer.unobserve(entry.target);
-            }
-        });
-    }, observerOptions);
-
-    observer.observe(chat);
-}
-
-/**
- * Animate messages with staggered timing
- */
-function animateMessages(messages) {
-    messages.forEach((message) => {
-        const delay = parseInt(message.dataset.delay, 10) || 0;
-        setTimeout(() => {
-            message.classList.add('visible');
-        }, delay);
-    });
-}
 
 /**
  * FAQ Accordion
