@@ -178,7 +178,7 @@ function initBetaSignupForms() {
 
 /**
  * Rotating Headline Wheel
- * Cycles through phrases with infinite seamless vertical scroll
+ * Scrolls through phrases and stops at the last one ("anybody")
  */
 function initRotatingHeadline() {
     const container = document.getElementById('wheel-container');
@@ -191,6 +191,7 @@ function initRotatingHeadline() {
     const totalItems = items.length;
     const interval = 2000;
     const itemHeight = 1.2;
+    let intervalId;
 
     // Set initial active state
     items[0].classList.add('active');
@@ -199,30 +200,24 @@ function initRotatingHeadline() {
         // Remove active from current
         items[currentIndex].classList.remove('active');
 
-        // Move to next (loop back to 0 at end)
-        currentIndex = (currentIndex + 1) % totalItems;
+        // Move to next
+        currentIndex++;
 
         // Add active to new current
         items[currentIndex].classList.add('active');
 
-        // Move the container up (or reset to 0 for loop)
+        // Move the container up
         const offset = currentIndex * itemHeight;
+        container.style.transform = `translateY(-${offset}em)`;
 
-        // If looping back to start, do instant reset
-        if (currentIndex === 0) {
-            container.style.transition = 'none';
-            container.style.transform = 'translateY(0)';
-            // Re-enable transition after repaint
-            requestAnimationFrame(() => {
-                container.style.transition = 'transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
-            });
-        } else {
-            container.style.transform = `translateY(-${offset}em)`;
+        // Stop at the last item ("anybody")
+        if (currentIndex >= totalItems - 1) {
+            clearInterval(intervalId);
         }
     }
 
     // Start rotation
-    setInterval(rotate, interval);
+    intervalId = setInterval(rotate, interval);
 }
 
 /**
