@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initScrollAnimations();
     initFaqAccordion();
     initBetaSignupForms();
+    initRotatingHeadline();
 });
 
 /**
@@ -173,6 +174,55 @@ function initBetaSignupForms() {
             }
         });
     });
+}
+
+/**
+ * Rotating Headline
+ * Cycles through phrases with fade animation
+ */
+function initRotatingHeadline() {
+    const element = document.getElementById('rotating-text');
+    if (!element) return;
+
+    const phrases = [
+        'busy mom',
+        'busy dad',
+        'lazy student',
+        'grandma',
+        'CEO',
+        'executive'
+    ];
+
+    let currentIndex = 0;
+    const interval = 2000; // 2 seconds between rotations
+    const fadeDuration = 300; // matches CSS transition
+
+    // Set initial phrase
+    element.textContent = phrases[currentIndex];
+
+    function rotate() {
+        // Fade out
+        element.classList.add('fade-out');
+
+        setTimeout(() => {
+            // Update text
+            currentIndex = (currentIndex + 1) % phrases.length;
+            element.textContent = phrases[currentIndex];
+
+            // Prepare for fade in
+            element.classList.remove('fade-out');
+            element.classList.add('fade-in');
+
+            // Trigger reflow to restart animation
+            void element.offsetWidth;
+
+            // Fade in
+            element.classList.remove('fade-in');
+        }, fadeDuration);
+    }
+
+    // Start rotation
+    setInterval(rotate, interval);
 }
 
 /**

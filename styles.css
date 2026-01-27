@@ -319,12 +319,74 @@ section {
 }
 
 /* ==========================================================================
-   7. Hero Section
+   7. Rotating Headline Section
+   ========================================================================== */
+.rotating-headline-section {
+    padding-top: calc(var(--nav-height) + var(--spacing-2xl));
+    padding-bottom: var(--spacing-lg);
+    text-align: center;
+}
+
+.rotating-headline {
+    font-family: var(--font-display);
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    font-weight: 500;
+    color: var(--color-text);
+    letter-spacing: -0.01em;
+}
+
+.rotating-text-wrapper {
+    display: inline-block;
+    position: relative;
+    min-width: 180px;
+    text-align: left;
+}
+
+@media (min-width: 768px) {
+    .rotating-text-wrapper {
+        min-width: 220px;
+    }
+}
+
+.rotating-text {
+    display: inline-block;
+    color: var(--color-primary);
+    font-weight: 600;
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.rotating-text.fade-out {
+    opacity: 0;
+    transform: translateY(-8px);
+}
+
+.rotating-text.fade-in {
+    opacity: 0;
+    transform: translateY(8px);
+}
+
+/* Respect reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+    .rotating-text {
+        transition: opacity 0.3s ease;
+        transform: none;
+    }
+
+    .rotating-text.fade-out,
+    .rotating-text.fade-in {
+        transform: none;
+    }
+}
+
+/* ==========================================================================
+   8. Hero Section
    ========================================================================== */
 .hero {
-    padding-top: calc(var(--nav-height) + var(--spacing-3xl));
+    padding-top: var(--spacing-xl);
     padding-bottom: var(--spacing-3xl);
-    min-height: 100vh;
+    min-height: calc(100vh - var(--nav-height) - 120px);
     display: flex;
     align-items: center;
 }
