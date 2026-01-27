@@ -344,7 +344,7 @@ section {
 .wheel-wrapper {
     display: inline-block;
     position: relative;
-    height: 4.2em; /* Show 3 items (3 x 1.4em) */
+    height: 4.5em; /* Show 3 items with padding */
     overflow: hidden;
     vertical-align: middle;
     min-width: 180px;
@@ -364,19 +364,19 @@ section {
     position: absolute;
     left: 0;
     right: 0;
-    height: 1em;
+    height: 0.8em;
     pointer-events: none;
     z-index: 2;
 }
 
 .wheel-wrapper::before {
     top: 0;
-    background: linear-gradient(to bottom, var(--color-bg) 0%, transparent 80%);
+    background: linear-gradient(to bottom, var(--color-bg) 0%, transparent 100%);
 }
 
 .wheel-wrapper::after {
     bottom: 0;
-    background: linear-gradient(to top, var(--color-bg) 0%, transparent 80%);
+    background: linear-gradient(to top, var(--color-bg) 0%, transparent 100%);
 }
 
 /* Container that moves - positions active item in center */

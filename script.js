@@ -178,35 +178,68 @@ function initBetaSignupForms() {
 
 /**
  * Rotating Headline Wheel
- * Cycles through phrases with vertical wheel animation
+ * Cycles through phrases with infinite seamless vertical scroll
  */
 function initRotatingHeadline() {
     const container = document.getElementById('wheel-container');
     if (!container) return;
 
-    const items = container.querySelectorAll('.wheel-item');
-    if (items.length === 0) return;
+    const originalItems = Array.from(container.querySelectorAll('.wheel-item'));
+    if (originalItems.length === 0) return;
 
+    // Clone first few items and append to end for seamless loop
+    const cloneCount = 3;
+    for (let i = 0; i < cloneCount; i++) {
+        const clone = originalItems[i].cloneNode(true);
+        clone.classList.add('clone');
+        container.appendChild(clone);
+    }
+
+    const allItems = container.querySelectorAll('.wheel-item');
     let currentIndex = 0;
     const interval = 2000; // 2 seconds between rotations
     const itemHeight = 1.4; // em units, matches CSS
+    const totalOriginal = originalItems.length;
 
     // Set initial active state
-    items[currentIndex].classList.add('active');
+    allItems[currentIndex].classList.add('active');
 
     function rotate() {
         // Remove active from current
-        items[currentIndex].classList.remove('active');
+        allItems[currentIndex].classList.remove('active');
 
         // Move to next
-        currentIndex = (currentIndex + 1) % items.length;
+        currentIndex++;
 
         // Add active to new current
-        items[currentIndex].classList.add('active');
+        allItems[currentIndex].classList.add('active');
 
         // Move the container up
         const offset = currentIndex * itemHeight;
         container.style.transform = `translateY(-${offset}em)`;
+
+        // When we reach the clones, instantly jump back to start
+        if (currentIndex >= totalOriginal) {
+            setTimeout(() => {
+                // Disable transition for instant jump
+                container.style.transition = 'none';
+                currentIndex = 0;
+
+                // Update active states
+                allItems.forEach(item => item.classList.remove('active'));
+                allItems[currentIndex].classList.add('active');
+
+                // Reset position
+                container.style.transform = 'translateY(0)';
+
+                // Re-enable transition after a frame
+                requestAnimationFrame(() => {
+                    requestAnimationFrame(() => {
+                        container.style.transition = 'transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
+                    });
+                });
+            }, 500); // Wait for scroll animation to finish
+        }
     }
 
     // Start rotation
