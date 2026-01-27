@@ -195,14 +195,24 @@ function initRotatingHeadline() {
         container.appendChild(clone);
     }
 
+    const allItems = container.querySelectorAll('.wheel-item');
     let currentIndex = 0;
     const interval = 2000; // 2 seconds between rotations
     const itemHeight = 1.2; // em units, matches CSS
     const totalOriginal = originalItems.length;
 
+    // Set initial active state
+    allItems[0].classList.add('active');
+
     function rotate() {
+        // Remove active from current
+        allItems[currentIndex].classList.remove('active');
+
         // Move to next
         currentIndex++;
+
+        // Add active to new current
+        allItems[currentIndex].classList.add('active');
 
         // Move the container up
         const offset = currentIndex * itemHeight;
@@ -213,7 +223,13 @@ function initRotatingHeadline() {
             setTimeout(() => {
                 // Disable transition for instant jump
                 container.style.transition = 'none';
+
+                // Remove active from clone
+                allItems[currentIndex].classList.remove('active');
                 currentIndex = 0;
+
+                // Add active to first item
+                allItems[0].classList.add('active');
 
                 // Reset position
                 container.style.transform = 'translateY(0)';
