@@ -1,0 +1,9 @@
+{
+  "name": "tulip-landing",
+  "version": "1.0.0",
+  "description": "Tulip AI Executive Assistant Landing Page",
+  "private": true,
+  "dependencies": {
+    "@neondatabase/serverless": "^0.9.0"
+  }
+}

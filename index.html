@@ -20,7 +20,7 @@
                 <a href="#pricing">Pricing</a>
                 <a href="#faq">FAQ</a>
             </nav>
-            <a href="#cta" class="nav-cta btn btn-primary">Get Started</a>
+            <a href="#cta" class="nav-cta btn btn-primary">Join Beta</a>
             <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
                 <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <circle cx="12" cy="12" r="5"></circle>
@@ -49,8 +49,15 @@
                     <h1 class="hero-title">Your Executive Assistant. $20/month.</h1>
                     <p class="hero-subtitle">The productivity of a $200k/year hire, delivered through iMessage. No app required.</p>
                     <div class="hero-cta">
-                        <a href="#cta" class="btn btn-primary btn-large">Text Tulip Now</a>
-                        <p class="hero-note">No app download • Free to try</p>
+                        <form class="beta-signup-form" id="hero-signup-form">
+                            <div class="form-row">
+                                <input type="email" name="email" placeholder="Email address" required class="form-input">
+                                <input type="tel" name="phone" placeholder="Phone (optional)" class="form-input">
+                                <button type="submit" class="btn btn-primary">Join Beta</button>
+                            </div>
+                            <p class="form-status"></p>
+                        </form>
+                        <p class="hero-note">Free beta access • Be the first to try</p>
                         <p class="hero-social-proof">Join 100+ users</p>
                     </div>
                 </div>
@@ -212,7 +219,12 @@
                         <li><span class="icon-check">✓</span> Memory across conversations</li>
                         <li><span class="icon-check">✓</span> Cancel anytime</li>
                     </ul>
-                    <a href="#cta" class="btn btn-primary btn-large">Text Tulip Now</a>
+                    <form class="beta-signup-form beta-signup-inline" id="pricing-signup-form">
+                        <input type="email" name="email" placeholder="Email address" required class="form-input">
+                        <input type="tel" name="phone" placeholder="Phone (optional)" class="form-input">
+                        <button type="submit" class="btn btn-primary btn-large">Join Beta</button>
+                        <p class="form-status"></p>
+                    </form>
                 </div>
             </div>
         </section>
@@ -246,7 +258,7 @@
                             <span class="faq-icon">+</span>
                         </button>
                         <div class="faq-answer">
-                            <p>Not yet. Tulip currently only works through iMessage on iPhone. Android support is on our roadmap.</p>
+                            <p>Yes! Tulip works through both iMessage and SMS, so you can use it on any phone.</p>
                         </div>
                     </div>
                     <div class="faq-item fade-in">
@@ -275,9 +287,16 @@
         <section class="final-cta" id="cta">
             <div class="container">
                 <h2 class="final-cta-title fade-in">Stop drowning in tasks.</h2>
-                <p class="final-cta-subtitle fade-in">Your assistant is one text away.</p>
-                <a href="#" class="btn btn-primary btn-large fade-in">Text Tulip Now</a>
-                <p class="final-cta-note fade-in">iMessage only • Cancel anytime</p>
+                <p class="final-cta-subtitle fade-in">Join the beta and be the first to try Tulip.</p>
+                <form class="beta-signup-form fade-in" id="final-signup-form">
+                    <div class="form-row">
+                        <input type="email" name="email" placeholder="Email address" required class="form-input">
+                        <input type="tel" name="phone" placeholder="Phone (optional)" class="form-input">
+                        <button type="submit" class="btn btn-primary btn-large">Join Beta</button>
+                    </div>
+                    <p class="form-status"></p>
+                </form>
+                <p class="final-cta-note fade-in">Free beta access • No credit card required</p>
             </div>
         </section>
     </main>

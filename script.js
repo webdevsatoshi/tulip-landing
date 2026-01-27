@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initNavScroll();
     initScrollAnimations();
     initFaqAccordion();
+    initBetaSignupForms();
 });
 
 /**
@@ -120,6 +121,56 @@ function initFaqAccordion() {
             // Toggle current item
             item.classList.toggle('open');
             question.setAttribute('aria-expanded', !isOpen);
+        });
+    });
+}
+
+/**
+ * Beta Signup Forms
+ * Handles form submission to Neon database
+ */
+function initBetaSignupForms() {
+    const forms = document.querySelectorAll('.beta-signup-form');
+    if (forms.length === 0) return;
+
+    forms.forEach((form) => {
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const formData = new FormData(form);
+            const email = formData.get('email');
+            const phone = formData.get('phone') || null;
+            const statusEl = form.querySelector('.form-status');
+            const submitBtn = form.querySelector('button[type="submit"]');
+
+            // Disable button and show loading state
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Joining...';
+
+            try {
+                // Calls the Vercel serverless function
+                const response = await fetch('/api/signup', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ email, phone }),
+                });
+
+                if (response.ok) {
+                    statusEl.textContent = "You're on the list! We'll be in touch soon.";
+                    statusEl.className = 'form-status success';
+                    form.reset();
+                } else {
+                    throw new Error('Failed to submit');
+                }
+            } catch (error) {
+                statusEl.textContent = 'Something went wrong. Please try again.';
+                statusEl.className = 'form-status error';
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Join Beta';
+            }
         });
     });
 }
