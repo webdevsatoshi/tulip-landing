@@ -344,9 +344,9 @@ section {
 .wheel-wrapper {
     display: inline-block;
     position: relative;
-    height: 1.4em;
+    height: 4.2em; /* Show 3 items (3 x 1.4em) */
     overflow: hidden;
-    vertical-align: bottom;
+    vertical-align: middle;
     min-width: 180px;
     text-align: left;
 }
@@ -357,33 +357,34 @@ section {
     }
 }
 
-/* Mask gradient for fade effect at top and bottom */
+/* Subtle gradient masks at edges - partially transparent */
 .wheel-wrapper::before,
 .wheel-wrapper::after {
     content: '';
     position: absolute;
     left: 0;
     right: 0;
-    height: 1.2em;
+    height: 1em;
     pointer-events: none;
     z-index: 2;
 }
 
 .wheel-wrapper::before {
     top: 0;
-    background: linear-gradient(to bottom, var(--color-bg) 0%, transparent 100%);
+    background: linear-gradient(to bottom, var(--color-bg) 0%, transparent 80%);
 }
 
 .wheel-wrapper::after {
     bottom: 0;
-    background: linear-gradient(to top, var(--color-bg) 0%, transparent 100%);
+    background: linear-gradient(to top, var(--color-bg) 0%, transparent 80%);
 }
 
-/* Container that moves */
+/* Container that moves - positions active item in center */
 .wheel-container {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    padding-top: 1.4em; /* Offset so first item starts in middle slot */
     transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -394,14 +395,16 @@ section {
     line-height: 1.4em;
     font-weight: 600;
     color: var(--color-text-light);
-    opacity: 0.3;
-    transition: color 0.4s ease, opacity 0.4s ease;
+    opacity: 0.4;
+    transition: color 0.4s ease, opacity 0.4s ease, transform 0.4s ease;
     white-space: nowrap;
 }
 
 .wheel-item.active {
     color: var(--color-primary);
     opacity: 1;
+    transform: scale(1.08);
+    font-weight: 700;
 }
 
 /* Respect reduced motion preference */
