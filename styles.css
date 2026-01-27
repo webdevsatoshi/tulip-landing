@@ -333,50 +333,85 @@ section {
     font-weight: 500;
     color: var(--color-text);
     letter-spacing: -0.01em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.3em;
 }
 
-.rotating-text-wrapper {
+/* Wheel wrapper - clips the visible area */
+.wheel-wrapper {
     display: inline-block;
     position: relative;
+    height: 1.4em;
+    overflow: hidden;
+    vertical-align: bottom;
     min-width: 180px;
     text-align: left;
 }
 
 @media (min-width: 768px) {
-    .rotating-text-wrapper {
+    .wheel-wrapper {
         min-width: 220px;
     }
 }
 
-.rotating-text {
-    display: inline-block;
-    color: var(--color-primary);
+/* Mask gradient for fade effect at top and bottom */
+.wheel-wrapper::before,
+.wheel-wrapper::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 1.2em;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.wheel-wrapper::before {
+    top: 0;
+    background: linear-gradient(to bottom, var(--color-bg) 0%, transparent 100%);
+}
+
+.wheel-wrapper::after {
+    bottom: 0;
+    background: linear-gradient(to top, var(--color-bg) 0%, transparent 100%);
+}
+
+/* Container that moves */
+.wheel-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Individual wheel items */
+.wheel-item {
+    display: block;
+    height: 1.4em;
+    line-height: 1.4em;
     font-weight: 600;
+    color: var(--color-text-light);
+    opacity: 0.3;
+    transition: color 0.4s ease, opacity 0.4s ease;
+    white-space: nowrap;
+}
+
+.wheel-item.active {
+    color: var(--color-primary);
     opacity: 1;
-    transform: translateY(0);
-    transition: opacity 0.3s ease, transform 0.3s ease;
-}
-
-.rotating-text.fade-out {
-    opacity: 0;
-    transform: translateY(-8px);
-}
-
-.rotating-text.fade-in {
-    opacity: 0;
-    transform: translateY(8px);
 }
 
 /* Respect reduced motion preference */
 @media (prefers-reduced-motion: reduce) {
-    .rotating-text {
-        transition: opacity 0.3s ease;
-        transform: none;
+    .wheel-container {
+        transition: transform 0.1s ease;
     }
 
-    .rotating-text.fade-out,
-    .rotating-text.fade-in {
-        transform: none;
+    .wheel-item {
+        transition: color 0.1s ease, opacity 0.1s ease;
     }
 }
 

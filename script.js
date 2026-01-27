@@ -177,48 +177,36 @@ function initBetaSignupForms() {
 }
 
 /**
- * Rotating Headline
- * Cycles through phrases with fade animation
+ * Rotating Headline Wheel
+ * Cycles through phrases with vertical wheel animation
  */
 function initRotatingHeadline() {
-    const element = document.getElementById('rotating-text');
-    if (!element) return;
+    const container = document.getElementById('wheel-container');
+    if (!container) return;
 
-    const phrases = [
-        'busy mom',
-        'busy dad',
-        'lazy student',
-        'grandma',
-        'CEO',
-        'executive'
-    ];
+    const items = container.querySelectorAll('.wheel-item');
+    if (items.length === 0) return;
 
     let currentIndex = 0;
     const interval = 2000; // 2 seconds between rotations
-    const fadeDuration = 300; // matches CSS transition
+    const itemHeight = 1.4; // em units, matches CSS
 
-    // Set initial phrase
-    element.textContent = phrases[currentIndex];
+    // Set initial active state
+    items[currentIndex].classList.add('active');
 
     function rotate() {
-        // Fade out
-        element.classList.add('fade-out');
+        // Remove active from current
+        items[currentIndex].classList.remove('active');
 
-        setTimeout(() => {
-            // Update text
-            currentIndex = (currentIndex + 1) % phrases.length;
-            element.textContent = phrases[currentIndex];
+        // Move to next
+        currentIndex = (currentIndex + 1) % items.length;
 
-            // Prepare for fade in
-            element.classList.remove('fade-out');
-            element.classList.add('fade-in');
+        // Add active to new current
+        items[currentIndex].classList.add('active');
 
-            // Trigger reflow to restart animation
-            void element.offsetWidth;
-
-            // Fade in
-            element.classList.remove('fade-in');
-        }, fadeDuration);
+        // Move the container up
+        const offset = currentIndex * itemHeight;
+        container.style.transform = `translateY(-${offset}em)`;
     }
 
     // Start rotation
