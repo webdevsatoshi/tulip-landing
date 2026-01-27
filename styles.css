@@ -343,13 +343,12 @@ section {
 
 /* Wheel wrapper - clips the visible area */
 .wheel-wrapper {
-    display: inline-flex;
+    display: inline-block;
     position: relative;
-    height: 3.6em; /* Show 3 items */
+    height: 1.2em;
     overflow: hidden;
-    vertical-align: middle;
+    vertical-align: baseline;
     min-width: 140px;
-    align-items: center;
 }
 
 @media (min-width: 768px) {
@@ -363,7 +362,6 @@ section {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    padding-top: 1.2em; /* Start first item in middle */
     transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -371,7 +369,7 @@ section {
 .wheel-item {
     display: block;
     height: 1.2em;
-    line-height: 1.2em;
+    line-height: 1.2;
     font-weight: 600;
     color: var(--color-text-muted);
     opacity: 0.3;
