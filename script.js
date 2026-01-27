@@ -184,63 +184,40 @@ function initRotatingHeadline() {
     const container = document.getElementById('wheel-container');
     if (!container) return;
 
-    const originalItems = Array.from(container.querySelectorAll('.wheel-item'));
-    if (originalItems.length === 0) return;
+    const items = container.querySelectorAll('.wheel-item');
+    if (items.length === 0) return;
 
-    // Clone first few items and append to end for seamless loop
-    const cloneCount = 3;
-    for (let i = 0; i < cloneCount; i++) {
-        const clone = originalItems[i].cloneNode(true);
-        clone.classList.add('clone');
-        container.appendChild(clone);
-    }
-
-    const allItems = container.querySelectorAll('.wheel-item');
     let currentIndex = 0;
-    const interval = 2000; // 2 seconds between rotations
-    const itemHeight = 1.2; // em units, matches CSS
-    const totalOriginal = originalItems.length;
+    const totalItems = items.length;
+    const interval = 2000;
+    const itemHeight = 1.2;
 
     // Set initial active state
-    allItems[0].classList.add('active');
+    items[0].classList.add('active');
 
     function rotate() {
         // Remove active from current
-        allItems[currentIndex].classList.remove('active');
+        items[currentIndex].classList.remove('active');
 
-        // Move to next
-        currentIndex++;
+        // Move to next (loop back to 0 at end)
+        currentIndex = (currentIndex + 1) % totalItems;
 
         // Add active to new current
-        allItems[currentIndex].classList.add('active');
+        items[currentIndex].classList.add('active');
 
-        // Move the container up
+        // Move the container up (or reset to 0 for loop)
         const offset = currentIndex * itemHeight;
-        container.style.transform = `translateY(-${offset}em)`;
 
-        // When we reach the clones, instantly jump back to start
-        if (currentIndex >= totalOriginal) {
-            setTimeout(() => {
-                // Disable transition for instant jump
-                container.style.transition = 'none';
-
-                // Remove active from clone
-                allItems[currentIndex].classList.remove('active');
-                currentIndex = 0;
-
-                // Add active to first item
-                allItems[0].classList.add('active');
-
-                // Reset position
-                container.style.transform = 'translateY(0)';
-
-                // Re-enable transition after a frame
-                requestAnimationFrame(() => {
-                    requestAnimationFrame(() => {
-                        container.style.transition = 'transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
-                    });
-                });
-            }, 500); // Wait for scroll animation to finish
+        // If looping back to start, do instant reset
+        if (currentIndex === 0) {
+            container.style.transition = 'none';
+            container.style.transform = 'translateY(0)';
+            // Re-enable transition after repaint
+            requestAnimationFrame(() => {
+                container.style.transition = 'transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
+            });
+        } else {
+            container.style.transform = `translateY(-${offset}em)`;
         }
     }
 
