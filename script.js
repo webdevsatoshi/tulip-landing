@@ -9,7 +9,6 @@ document.addEventListener('DOMContentLoaded', () => {
     initScrollAnimations();
     initFaqAccordion();
     initBetaSignupForms();
-    initRotatingHeadline();
 });
 
 /**
@@ -174,50 +173,6 @@ function initBetaSignupForms() {
             }
         });
     });
-}
-
-/**
- * Rotating Headline Wheel
- * Scrolls through phrases and stops at the last one ("anybody")
- */
-function initRotatingHeadline() {
-    const container = document.getElementById('wheel-container');
-    if (!container) return;
-
-    const items = container.querySelectorAll('.wheel-item');
-    if (items.length === 0) return;
-
-    let currentIndex = 0;
-    const totalItems = items.length;
-    const interval = 2000;
-    const itemHeight = 1.2;
-    let intervalId;
-
-    // Set initial active state
-    items[0].classList.add('active');
-
-    function rotate() {
-        // Remove active from current
-        items[currentIndex].classList.remove('active');
-
-        // Move to next
-        currentIndex++;
-
-        // Add active to new current
-        items[currentIndex].classList.add('active');
-
-        // Move the container up
-        const offset = currentIndex * itemHeight;
-        container.style.transform = `translateY(-${offset}em)`;
-
-        // Stop at the last item ("anybody")
-        if (currentIndex >= totalItems - 1) {
-            clearInterval(intervalId);
-        }
-    }
-
-    // Start rotation
-    intervalId = setInterval(rotate, interval);
 }
 
 /**
